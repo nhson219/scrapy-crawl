@@ -9,8 +9,8 @@ try:
 
     add_player = ("INSERT INTO `statistics`"
                   "(`name`, `club`, `national`, `position`, `age`, `matches`, `starts`, `mins`, `goals`, `assists`, `passes_attempted`,"
-                  " `perc_passes_completed`, `penalty_goals`, `penalty_attempted`, `yellow_cards`, `red_cards`) "
-                  " VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+                  " `perc_passes_completed`, `penalty_goals`, `penalty_attempted`, `yellow_cards`, `red_cards`, `rating`) "
+                  " VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
     # cursor.execute(add_employee, data_employee)
 
     response = requests.get(
@@ -20,7 +20,7 @@ try:
         for item2 in item:
             cursor = cnx.cursor()
             data_player = (item2["2"], item2["5"], item2["3"], item2["13"], item2["0"],
-                           item2["25"], item2["20"], item2["17"], item2["20"], item2["21"], 0, 0, 0, 0, item2["18"], item2["19"])
+                           item2["25"], item2["20"], item2["17"], item2["20"], item2["21"], 0, 0, 0, 0, item2["18"], item2["19"], int(item2["1"]) if (item2["1"]) else 0)
             cursor.execute(add_player, data_player)
             cnx.commit()
             cursor.close()
